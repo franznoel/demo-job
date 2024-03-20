@@ -1,0 +1,31 @@
+name: Shared Workspace Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create file in job1
+        run: |
+          echo "Hello from job1!" > example.txt
+          ls -als
+          cat example.txt
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Display contents of example.txt in job2
+        run: |
+          ls -als
+          cat example.txt
